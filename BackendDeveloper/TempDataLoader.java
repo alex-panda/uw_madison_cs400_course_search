@@ -26,7 +26,7 @@ public class TempDataLoader {
 			prereqs.add("CS" + (200 + (i - 1)));
 			prereqs.add(new String[] {"CS" + (200 + (i - 2)), "CS" + (200 + (i - 3))});
 			
-			ArrayList<Object> noreqs = new ArrayList<>();
+			ArrayList<String> noreqs = new ArrayList<>();
 			noreqs.add("CS" + (200 + (i - 4)));
 			
 			Course course = new Course("CS" + (200 + i), prereqs, noreqs);
