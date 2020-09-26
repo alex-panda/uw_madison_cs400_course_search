@@ -1,69 +1,94 @@
+// --== CS400 File Header Information ==--
+// Name: Xiaohan Shen
+// Email: xshen97@wisc.edu
+// Team: DC
+// TA: Yelun
+// Lecturer: Gary Dahl
+// Notes to Grader: None
 import java.util.ArrayList;
 
 /**
- * This class is built to test the function of Search object
- * it initialize a course object
- * @author Yuan Chen
+ * Represents a course, stores information about the course's prerequisites and the courses that cannot be taken
+ * before taking this course.
  *
+ * @author Xiaohan Shen <xshen97@wisc.edu> on 09/25/2020
  */
 public class Course {
-   private String courseName;
-   private ArrayList<Course> prereqs;
-   
-   /**
-    * constructor
-    * @param name of the course
-    * @param prereqs a list of prerequisite courses
-    */
-   public Course(String name, ArrayList<Course> prereqs) {
-      this.courseName = name;
-      this.prereqs = prereqs;
-   }
-   
-   /**
-    * Getter
-    * @return name of the course
-    */
-   public String getCourseName() {
-      return courseName;
-   }
-   
-   /**
-    * mutator
-    * @param name of the course 
-    */
-   public void setCourseName(String name) {
-      this.courseName = name;
-   }
-   
-   /**
-    * Getter
-    * @return prerequisites of the course
-    */
-   public ArrayList<Course> getPrereqs() {
-      return prereqs;
-   }
-   
-   /**
-    * mutator
-    * @param prereqs a list of prerequisite courses  
-    */
-   public void setPrereqs(ArrayList<Course> prereqs) {
-      this.prereqs = prereqs;
-   }
-   
-   /**
-    * toString method
-    * @return a String of the course Name plus the prerequisite courses
-    */
-   public String toString() {
-      String courseDes;
-      courseDes = "Course Name: " + this.courseName + "\nPrerequistes: ";
-      for (Course c: prereqs) {
-         courseDes = courseDes + c.getCourseName() + "_";
-      }
-      return courseDes;
-   }
-      
+    private String name;
+    // ¡°(CS 200|CS300)&(CS400)¡± = [CS400,[CS300,CS200]]
+    private ArrayList<Object> prereqs;
 
+    private ArrayList<String> noreqs;
+
+    /**
+     * Constructs a Course object with specified course number, prerequisites, and courses that cannot be taken
+     * prior to this course.
+     *
+     * @param name is the course number, such as "CS400".
+     * @param prereqs is the prerequisites of the course.
+     * @param noreqs is courses that cannot be taken prior to the course.
+     */
+    public Course(String name, ArrayList<Object> prereqs, ArrayList<String> noreqs) {
+        this.name = name;
+        this.prereqs = prereqs;
+        this.noreqs = noreqs;
+    }
+
+    /**
+     * Constructs a Course object with specified course number and prerequisites, and assumes that there is
+     * no restriction on courses that cannot be taken prior to this course.
+     *
+     * @param name is the course number, such as "CS400".
+     * @param prereqs is the prerequisites of the course.
+     */
+    public Course(String name, ArrayList<Object> prereqs) {
+        this(name, prereqs, null);
+    }
+
+    /**
+     * Returns the course number.
+     *
+     * @return the course number.
+     */
+    public String getName() {
+        return name;
+    };
+
+    /**
+     * Returns whether the course has prerequisites.
+     *
+     * @return true if the course has prerequisites, false otherwise.
+     */
+    public Boolean hasPrereqs() {
+        //return (prereqs == null);
+       return prereqs.size() != 0;
+    }
+
+    /**
+     * Returns whether the course has courses that cannot be taken prior to this course.
+     *
+     * @return true if the course has courses that cannot be taken prior to this course, false otherwise.
+     */
+    public Boolean hasNoreqs() {
+        //return (noreqs == null);
+       return noreqs.size() != 0;
+    }
+
+    /**
+     * Returns the list of course prerequisites.
+     *
+     * @return the list of course prerequisites.
+     */
+    public ArrayList<Object> getCoursePrereqs() {
+        return prereqs;
+    }
+
+    /**
+     * Returns the list of courses that cannot be taken prior to this course.
+     *
+     * @return the list of courses that cannot be taken prior to this course.
+     */
+    public ArrayList<String> getCourseNoreqs() {
+        return noreqs;
+    }
 }
