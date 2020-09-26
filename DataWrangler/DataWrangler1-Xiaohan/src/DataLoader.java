@@ -35,7 +35,7 @@ public class DataLoader{
      * Constructs a DataLoader that reads course data from default csv file.
      */
     public DataLoader() {
-        csvPath = "DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv";
+        csvPath = "CS_course_info.csv";
     }
 
     /**

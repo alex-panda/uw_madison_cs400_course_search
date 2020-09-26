@@ -60,7 +60,7 @@ public class Course {
      * @return true if the course has prerequisites, false otherwise.
      */
     public Boolean hasPrereqs() {
-        return (prereqs == null);
+        return (prereqs != null);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Course {
      * @return true if the course has courses that cannot be taken prior to this course, false otherwise.
      */
     public Boolean hasNoreqs() {
-        return (noreqs == null);
+        return (noreqs != null);
     }
 
     /**
