@@ -35,7 +35,7 @@ public class DataLoader{
      * Constructs a DataLoader that reads course data from default csv file.
      */
     public DataLoader() {
-        csvPath = "CS_course_info.csv";
+        csvPath = "DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv";
     }
 
     /**
@@ -48,9 +48,13 @@ public class DataLoader{
         ArrayList<Course> courses = new ArrayList<>();
         for (String[] courseInfo: courseList) {
             String courseName = courseInfo[0];
-            ArrayList<Object> prereqs = (courseInfo[1] == "None") ? null : parsePrereqs(courseInfo[1]);
-            ArrayList<String> noreqs = (courseInfo[2] == "None") ? null :
-                    (ArrayList<String>) Arrays.asList(courseInfo[2].split("&"));
+            ArrayList<Object> prereqs = (courseInfo[1].equals("None")) ? null : parsePrereqs(courseInfo[1]);
+            ArrayList<String> noreqs = new ArrayList<>();
+            if ((courseInfo[2].equals("None"))) {
+                noreqs = null;
+            } else {
+                noreqs.addAll(Arrays.asList(courseInfo[2].split("&")));
+            }
             courses.add(new Course(courseName, prereqs, noreqs));
         }
         return courses;
@@ -88,6 +92,7 @@ public class DataLoader{
             BufferedReader br = new BufferedReader(new FileReader(csvPath));
             String line = "";
             ArrayList<String[]> courseList = new ArrayList<>();
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 // use comma as separator
                 String[] courseInfo = line.split(",");

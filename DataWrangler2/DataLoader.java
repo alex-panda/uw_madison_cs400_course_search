@@ -37,7 +37,7 @@ public class DataLoader {
    */
   public DataLoader() {
     // this("CS_course_info.csv");
-    this("CS_course_info.csv");
+    this("DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv");
   }
 
   /**
