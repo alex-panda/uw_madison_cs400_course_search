@@ -6,6 +6,8 @@
 // Lecturer: Florian Heimerl
 // Notes to Grader: <optional extra notes>
 
+import java.lang.System.out.println;
+import java.lang.System.out.print;
 
 /**
  * A TestSuite to test the HashTableMap class.
@@ -16,20 +18,20 @@ public class TestFrontEnd {
     * The main method used to run the tests.
     */
     public static void main(String[] args) {
-        System.out.print("\nTest1: " + "\n");
-        System.out.print("    " + test1() + "\n\n");
+        print("\nTest1: " + "\n");
+        print("    " + test1() + "\n\n");
 
-        System.out.print("Test2: " + "\n");
-        System.out.print("   " + test1() + "\n\n");
+        print("Test2: " + "\n");
+        print("   " + test1() + "\n\n");
 
-        System.out.print("Test3: " + "\n");
-        System.out.print("   " + test1() + "\n\n");
+        print("Test3: " + "\n");
+        print("   " + test1() + "\n\n");
 
-        System.out.print("Test4: " + "\n");
-        System.out.print("   " + test1() + "\n\n");
+        print("Test4: " + "\n");
+        print("   " + test1() + "\n\n");
 
-        System.out.print("Test5: " + "\n");
-        System.out.print("   " + test1() + "\n\n");
+        print("Test5: " + "\n");
+        print("   " + test1() + "\n\n");
     }
 
    /**

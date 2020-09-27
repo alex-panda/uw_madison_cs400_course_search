@@ -6,8 +6,8 @@
 // Lecturer: Florian Heimerl
 // Notes to Grader: <optional extra notes>
 
-import System.out.println;
-import System.out.print;
+import java.lang.System.out.println;
+import java.lang.System.out.print;
 
 /**
  * A TestSuite to test the BackEnd of the application.

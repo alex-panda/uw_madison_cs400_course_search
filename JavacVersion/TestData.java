@@ -6,8 +6,8 @@
 // Lecturer: Florian Heimerl
 // Notes to Grader: <optional extra notes>
 
-import System.out.println;
-import System.out.print;
+import java.lang.System.out.println;
+import java.lang.System.out.print;
 
 /**
  * A TestSuite to test the DataWranglers' classes.
@@ -69,18 +69,17 @@ public class TestData {
     * Test that the Course Class works as it should.
     */
     public static boolean test3() {
-        courseName = "CS300";
-        ArrayList<Object> prereqs = ArrayList<Object>(10);
-        ArrayList<String> noReqs = ArrayList<String>(10);
-        Course course = Course(coursName, prereqs, noReqs);
+        {
+            courseName = "CS300";
+            ArrayList<Object> prereqs = ArrayList<Object>(10);
+            ArrayList<String> noReqs = ArrayList<String>(10);
+            Course course = Course(coursName, prereqs, noReqs);
 
-        if (!course.getName().equals(coursName)) {
-            println("Failed: The course class does not return the correct course name. " +
-                    "Name returned: " + course.getName() + " Expected: " + coursName);
+            if (!course.getName().equals(coursName)) {
+                println("Failed: The course class does not return the correct course name. " +
+                        "Name returned: " + course.getName() + " Expected: " + coursName);
+            }
         }
-
-
-
         return true;
     }
 }

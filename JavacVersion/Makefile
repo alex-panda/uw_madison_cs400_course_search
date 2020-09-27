@@ -15,7 +15,6 @@ Compile:
 	javac ./*.java
 
 test: Compile
-	java TestHashTable
 	java TestData
 	java TestBackEnd
 	java TestFrontEnd
