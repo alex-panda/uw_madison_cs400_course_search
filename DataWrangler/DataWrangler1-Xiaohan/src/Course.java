@@ -52,7 +52,7 @@ public class Course {
      */
     public String getName() {
         return name;
-    };
+    }
 
     /**
      * Returns whether the course has prerequisites.

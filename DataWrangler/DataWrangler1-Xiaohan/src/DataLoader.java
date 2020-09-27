@@ -16,10 +16,11 @@ import java.util.Arrays;
 /**
  * Loads course information including courses' prerequisites and courses that cannot be taken prior to taking certain
  * courses from target csv file.
+ *
+ * @author Xiaohan Shen
  */
 public class DataLoader{
-    private ArrayList<Course> data;
-    private String csvPath;
+    private final String csvPath;
 
     /**
      * Constructs a DataLoader object that reads course data from csv file at specified path.
@@ -88,12 +89,13 @@ public class DataLoader{
      * and courses that cannot be taken prior to the course.
      */
     private ArrayList<String[]> readData() {
+        BufferedReader csvReader = null;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(csvPath));
+            csvReader = new BufferedReader(new FileReader(csvPath));
             String line = "";
             ArrayList<String[]> courseList = new ArrayList<>();
-            br.readLine();
-            while ((line = br.readLine()) != null) {
+            csvReader.readLine();
+            while ((line = csvReader.readLine()) != null) {
                 // use comma as separator
                 String[] courseInfo = line.split(",");
                 courseList.add(courseInfo);
@@ -103,6 +105,13 @@ public class DataLoader{
             System.out.println("Course information file " + csvPath + " was not found!");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                assert csvReader != null;
+                csvReader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
