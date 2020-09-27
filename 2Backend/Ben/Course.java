@@ -15,11 +15,11 @@ public class Course {
 		return name;
 	}
 	
-	public ArrayList<Object> getPrereqs() {
+	public ArrayList<Object> getCoursePrereqs() {
 		return prereqs;
 	}
 	
-	public ArrayList<String> getNoreqs() {
+	public ArrayList<String> getCourseNoreqs() {
 		return noreqs;
 	}
 	

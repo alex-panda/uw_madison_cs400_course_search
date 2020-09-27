@@ -83,7 +83,7 @@ public class UserHashMapInterface {
 	 * private helper method to fill the hash table with existing data
 	 */
 	private void initialize() { // calls Data wrangler initialization
-		TempDataLoader dataLoader = new TempDataLoader(); // TODO remove Temp when integrated
+		TempDataLoader dataLoader = new DataLoader(); // TODO remove Temp when integrated
 		ArrayList<Course> courseList = dataLoader.getData();
 		for (Course course : courseList) {
 			addCourse(course);
