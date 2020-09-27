@@ -36,7 +36,6 @@ public class DataLoader {
    * filepath
    */
   public DataLoader() {
-    // this("CS_course_info.csv");
     this("DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv");
   }
 
@@ -66,6 +65,7 @@ public class DataLoader {
         temp = line.split(",");
         rawData.add(temp);
       }
+      br.close();
       return rawData;
     } catch (FileNotFoundException e) {
       System.out.println("The file " + csvPath + " does not exist.");
@@ -77,6 +77,7 @@ public class DataLoader {
 
   /**
    * Helper method that is used to clean the data
+   * 
    * @param rawData - data from csv file that hasn't been cleaned yet
    * @return ArrayList<Course> - ArrayList of all the Course objects from the csv file
    */
