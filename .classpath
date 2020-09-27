@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="application_under_test_assembled_by_Justin"/>
+	<classpathentry kind="src" path="BackendDeveloper"/>
+	<classpathentry kind="src" path="BackendDeveloper2"/>
+	<classpathentry kind="src" path="DataWrangler/DataWrangler1-Xiaohan/src"/>
+	<classpathentry kind="src" path="DataWrangler2"/>
+	<classpathentry kind="src" path="FrontEndDeveloper"/>
+	<classpathentry kind="src" path="FrontEndDeveloper2"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
