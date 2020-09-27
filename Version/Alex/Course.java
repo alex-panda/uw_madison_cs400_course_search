@@ -1,87 +1,92 @@
 // --== CS400 File Header Information ==--
-// Name: Allistair Mascarenhas
-// Email: anmascarenha@wisc.edu
+// Name: Xiaohan Shen
+// Email: xshen97@wisc.edu
 // Team: DC
-// TA: Yelun Bao
+// TA: Yelun
 // Lecturer: Gary Dahl
 // Notes to Grader: None
-
 import java.util.ArrayList;
 
 /**
- * The course class stores the name, prerequisites of that course and the courses that cannot be
- * taken before taking this course (norequisites)
+ * Represents a course, stores information about the course's prerequisites and the courses that cannot be taken
+ * before taking this course.
+ *
+ * @author Xiaohan Shen <xshen97@wisc.edu> on 09/25/2020
  */
 public class Course {
-  private String name;
-  private ArrayList<Object> prereqs;
-  // In order to take a course you can not take course(s) specified by noreqs
-  private ArrayList<String> noreqs;
+    private String name;
+    // “(CS 200|CS300)&(CS400)” = [CS400,[CS300,CS200]]
+    private ArrayList<Object> prereqs;
 
-  /**
-   * Constructor that initializes all the private variables of the class
-   * 
-   * @param name    - name of the course
-   * @param prereqs - prerequisites of the course
-   * @param noreqs  - courses that can't be taken before taking this course
-   */
-  public Course(String name, ArrayList<Object> prereqs, ArrayList<String> noreqs) {
-    this.name = name;
-    this.prereqs = prereqs;
-    this.noreqs = noreqs;
-  }
+    private ArrayList<String> noreqs;
 
-  /**
-   * Checks if the course has prerequisites
-   * 
-   * @return true if the course has prerequisites, and false otherwise
-   */
-  public boolean hasPrereqs() {
-    if (prereqs.size() == 0) {
-      return false;
-    } else {
-      return true;
+    /**
+     * Constructs a Course object with specified course number, prerequisites, and courses that cannot be taken
+     * prior to this course.
+     *
+     * @param name is the course number, such as "CS400".
+     * @param prereqs is the prerequisites of the course.
+     * @param noreqs is courses that cannot be taken prior to the course.
+     */
+    public Course(String name, ArrayList<Object> prereqs, ArrayList<String> noreqs) {
+        this.name = name;
+        this.prereqs = prereqs;
+        this.noreqs = noreqs;
     }
-  }
 
-  /**
-   * Checks if the course has other courses that cannot be taken prior to this course
-   * 
-   * @return true if the course does have courses that cannot be taken prior to this course, and
-   *         false otherwise
-   */
-  public boolean hasNoreqs() {
-    if (noreqs.size() == 0) {
-      return false;
-    } else {
-      return true;
+    /**
+     * Constructs a Course object with specified course number and prerequisites, and assumes that there is
+     * no restriction on courses that cannot be taken prior to this course.
+     *
+     * @param name is the course number, such as "CS400".
+     * @param prereqs is the prerequisites of the course.
+     */
+    public Course(String name, ArrayList<Object> prereqs) {
+        this(name, prereqs, null);
     }
-  }
 
-  /**
-   * Accessor method that returns the course name
-   * 
-   * @return String - course name
-   */
-  public String getName() {
-    return this.name;
-  }
+    /**
+     * Returns the course number.
+     *
+     * @return the course number.
+     */
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * Accessor method that returns the prerequisites of the course
-   * 
-   * @return ArrayList<Object> - ArrayList of course prerequisites
-   */
-  public ArrayList<Object> getCoursePrereqs() {
-    return this.prereqs;
-  }
+    /**
+     * Returns whether the course has prerequisites.
+     *
+     * @return true if the course has prerequisites, false otherwise.
+     */
+    public Boolean hasPrereqs() {
+        return (prereqs != null);
+    }
 
-  /**
-   * Accessor method that returns courses which cannot be taken before this course
-   * 
-   * @return ArrayList<String> - ArrayList of courses which cannot be taken before this course
-   */
-  public ArrayList<String> getCourseNoreqs() {
-    return this.noreqs;
-  }
+    /**
+     * Returns whether the course has courses that cannot be taken prior to this course.
+     *
+     * @return true if the course has courses that cannot be taken prior to this course, false otherwise.
+     */
+    public Boolean hasNoreqs() {
+        return (noreqs != null);
+    }
+
+    /**
+     * Returns the list of course prerequisites.
+     *
+     * @return the list of course prerequisites.
+     */
+    public ArrayList<Object> getCoursePrereqs() {
+        return prereqs;
+    }
+
+    /**
+     * Returns the list of courses that cannot be taken prior to this course.
+     *
+     * @return the list of courses that cannot be taken prior to this course.
+     */
+    public ArrayList<String> getCourseNoreqs() {
+        return noreqs;
+    }
 }

@@ -1,115 +1,118 @@
 // --== CS400 File Header Information ==--
-// Name: Allistair Mascarenhas
-// Email: anmascarenha@wisc.edu
+// Name: Xiaohan Shen
+// Email: xshen97@wisc.edu
 // Team: DC
-// TA: Yelun Bao
+// TA: Yelun
 // Lecturer: Gary Dahl
 // Notes to Grader: None
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * This class reads through and cleans up the data from a csv file
+ * Loads course information including courses' prerequisites and courses that cannot be taken prior to taking certain
+ * courses from target csv file.
+ *
+ * @author Xiaohan Shen
  */
-public class DataLoader {
-  private ArrayList<Course> data;
-  private String csvPath;
+public class DataLoader{
+    private final String csvPath;
 
-  /**
-   * Constructor with an argument that initialize data and csvPath by calling the appropriate
-   * methods
-   * 
-   * @param csvPath - name of the csv file
-   */
-  public DataLoader(String csvPath) {
-    this.csvPath = csvPath;
-    data = cleanData(readFile());
-  }
-
-  /**
-   * No argument constructor that calls the other constructor by passing in argument of the default
-   * filepath
-   */
-  public DataLoader() {
-    this("DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv");
-  }
-
-  /**
-   * Accessor method that returns data
-   * 
-   * @return data
-   */
-  public ArrayList<Course> getData() {
-    return data;
-  }
-
-  /**
-   * Helper method that reads through each line of the file. Makes use of try catch to handle any
-   * exceptions that arise
-   * 
-   * @return ArrayList<String[]> - raw data which hasn't yet been cleaned up
-   */
-  private ArrayList<String[]> readFile() {
-    try {
-      BufferedReader br = new BufferedReader(new FileReader(csvPath));
-      String line = "";
-      ArrayList<String[]> rawData = new ArrayList<String[]>();
-      String[] temp;
-      br.readLine();
-      while ((line = br.readLine()) != null) {
-        temp = line.split(",");
-        rawData.add(temp);
-      }
-      br.close();
-      return rawData;
-    } catch (FileNotFoundException e) {
-      System.out.println("The file " + csvPath + " does not exist.");
-    } catch (IOException e) {
-      e.printStackTrace();
+    /**
+     * Constructs a DataLoader object that reads course data from csv file at specified path.
+     * This constructor is intended for testing purposes since one can choose to load from test csv file.
+     *
+     * @param csvPath is the path of the target csv file
+     */
+    public DataLoader(String csvPath) {
+        this.csvPath = csvPath;
     }
-    return null;
-  }
 
-  /**
-   * Helper method that is used to clean the data
-   * 
-   * @param rawData - data from csv file that hasn't been cleaned yet
-   * @return ArrayList<Course> - ArrayList of all the Course objects from the csv file
-   */
-  private ArrayList<Course> cleanData(ArrayList<String[]> rawData) {
-    ArrayList<Course> courseList = new ArrayList<Course>();
+    /**
+     * Constructs a DataLoader that reads course data from default csv file.
+     */
+    public DataLoader() {
+        csvPath = "CS_course_info.csv";
+    }
 
-    for (String[] elem : rawData) {
-      ArrayList<Object> prereq = new ArrayList<Object>();
-      ArrayList<String> noreq = new ArrayList<String>();
-
-      if (!elem[1].equals("None")) {
-        String[] split1 = elem[1].split("&");
-
-        for (String curr : split1) {
-          if (curr.contains("|")) {
-            curr = curr.replace("(", "");
-            curr = curr.replace(")", "");
-            String[] split2 = curr.split("\\|");
-            prereq.add(Arrays.asList(split2));
-          } else {
-            prereq.add(curr);
-          }
+    /**
+     * Returns the course data read from target csv file.
+     *
+     * @return an ArrayList of Course objects that includes all course data from target csv file.
+     */
+    public ArrayList<Course> getData() {
+        ArrayList<String[]> courseList = readData();
+        ArrayList<Course> courses = new ArrayList<>();
+        for (String[] courseInfo: courseList) {
+            String courseName = courseInfo[0];
+            ArrayList<Object> prereqs = (courseInfo[1].equals("None")) ? null : parsePrereqs(courseInfo[1]);
+            ArrayList<String> noreqs = new ArrayList<>();
+            if ((courseInfo[2].equals("None"))) {
+                noreqs = null;
+            } else {
+                noreqs.addAll(Arrays.asList(courseInfo[2].split("&")));
+            }
+            courses.add(new Course(courseName, prereqs, noreqs));
         }
-      }
-
-      if (!elem[2].equals("None")) {
-        noreq = new ArrayList<>(Arrays.asList(elem[2].split("&")));
-      }
-
-      Course course = new Course(elem[0], prereq, noreq);
-      courseList.add(course);
+        return courses;
     }
-    return courseList;
-  }
+
+    /**
+     * Helper method that parses the prerequisites stored in csv file.
+     *
+     * @param prereqs is the String of prerequisites in csv file.
+     * @return the prerequisites represented in prereqs.
+     */
+    private ArrayList<Object> parsePrereqs(String prereqs) {
+        ArrayList<Object> parsedPrereqs = new ArrayList<>();
+        String[] requiredParts = prereqs.split("&");
+        for (String part: requiredParts){
+            if (part.contains("|")){
+                part = part.replaceAll("[()]","");
+                String[] alternatives = part.split("\\|");
+                parsedPrereqs.add(Arrays.asList(alternatives));
+            } else {
+                parsedPrereqs.add(part);
+            }
+        }
+        return parsedPrereqs;
+    }
+
+    /**
+     * Helper method that reads data from csv file at csvPath
+     *
+     * @return an ArrayList of String arrays containing each course's course number, prerequisites,
+     * and courses that cannot be taken prior to the course.
+     */
+    private ArrayList<String[]> readData() {
+        BufferedReader csvReader = null;
+        try {
+            csvReader = new BufferedReader(new FileReader(csvPath));
+            String line = "";
+            ArrayList<String[]> courseList = new ArrayList<>();
+            csvReader.readLine();
+            while ((line = csvReader.readLine()) != null) {
+                // use comma as separator
+                String[] courseInfo = line.split(",");
+                courseList.add(courseInfo);
+            }
+            return courseList;
+        } catch (FileNotFoundException e) {
+            System.out.println("Course information file " + csvPath + " was not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert csvReader != null;
+                csvReader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

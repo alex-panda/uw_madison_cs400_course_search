@@ -2,7 +2,7 @@
 // Name: Alexander Peseckis
 // Email: peseckis@wisc.edu
 // Team: DC
-// TA: Yulan BAO
+// TA: Yelun Bao
 // Lecturer: Florian Heimerl
 // Notes to Grader: <optional extra notes>
 

@@ -7,6 +7,7 @@
 // Lecturer: Florian Heimerl
 // Notes to Grader: This is the driver of our application
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -50,7 +51,7 @@ public class CommandLineDriver {
    */
   private static void printIndent(int indent) {
     for (int i = 0; i < indent; i++)
-      System.out.print("----");
+      System.out.print("    ");
   }
 
   /**
@@ -61,9 +62,10 @@ public class CommandLineDriver {
   private static void printNoRereqs(String courseName) {
     Course course = application.getCourse(courseName);
     if (course.hasNoreqs()) {
-      System.out.println(
-          "\nNote: you cannot take " + courseName + " if you've taken any of these courses:");
-      System.out.println(course.getCourseNoreqs().toString());
+      System.out
+          .print("Note: you cannot take " + courseName + " if you've taken any of these courses: ");
+      System.out.println(course.getCourseNoreqs());
+      System.out.println();
     }
   }
 
@@ -78,58 +80,50 @@ public class CommandLineDriver {
    */
   private static void printTree(Course course, int indent) {
     if (course.hasPrereqs()) {
+      // the Objects can be Lists or Strings
       Object[] prereqs = course.getCoursePrereqs().toArray();
-      for (int i = 0; i < prereqs.length; i++) {
-        // store and print the current course's direct prerequisites
-        String temp = prereqs[i].toString();
-        printIndent(indent);
-        System.out.println(temp);
-        // find all deeper prerequisites recursively
-        for (int j = 0; j < temp.length(); j++)
-          if (temp.charAt(j) == 'C') { // ONLY CS courses are interested when going deeper
-            String deeper = temp.substring(j, j + 5);
+      for (int i = 0; i < prereqs.length; i++) { // reads through the current course's prerequisites
+        if (prereqs[i] instanceof List<?>) { // if an Object is a List
+          List<String> arrayList = (List<String>) prereqs[i]; // cast it back to List of Strings
+          for (int j = 0; j < arrayList.size(); j++) {
+            // print one prerequisite at a time
+            printIndent(indent);
+            if (j == 0)
+              System.out.println(arrayList.get(j));
+            else
+              System.out.println("or " + arrayList.get(j));
+            // find pre-prerequisites if any
+            String deeper = arrayList.get(j);
             if (application.getCourse(deeper) != null) {
               Course deeperCourse = application.getCourse(deeper);
-              // do the deeper search only when a prerequisite course have more deeper prerequisites
+              // do the deeper search only when a prerequisite course have deeper prerequisites
               if (deeperCourse.hasPrereqs()) {
-                System.out.println();
-                printIndent(indent + 1);
-                System.out.println("To take " + deeper + ", you need to take:");
+                printIndent(indent);
                 printTree(deeperCourse, indent + 1);
               }
-              printNoRereqs(deeper);
             }
           }
+          System.out.println();
+        } else if (prereqs[i] instanceof String) { // if an Object is a String
+          // print it with correct format
+          printIndent(indent);
+          System.out.println(prereqs[i]);
+          // search deeper if there are any pre-prerequisites
+          if (application.getCourse((String) prereqs[i]) != null) {
+            Course deeperCourse = application.getCourse((String) prereqs[i]);
+            if (deeperCourse.hasPrereqs()) {
+              printIndent(indent);
+              printTree(deeperCourse, indent + 1);
+            }
+          }
+        }
       }
     }
+    printNoRereqs(course.getName()); // print any note on restrictions
   }
 
   /**
-   * The main method drives the application.
-   * 
-   * Example Course Input: CS514
-   * 
-   * Example Outputs:
-   * 
-   * ----Function[A]: CS514 is offered at UW-Madison!
-   * 
-   * ----Function[B]: The direct prerequisites of CS514 are: [MATH320, MATH340, MATH341, MATH375]
-   * [MATH322, MATH376, MATH421, MATH521] [CS200, CS220, CS300, CS310, CS301]
-   *
-   * Note: you only need to take one course from each row!
-   * 
-   * ----Function[C]:
-   * 
-   * The prerequisites of CS514 are: [MATH320, MATH340, MATH341, MATH375] [MATH322, MATH376,
-   * MATH421, MATH521] [CS200, CS220, CS300, CS310, CS301]
-   * 
-   * ----To take CS300, you need to take: ----[CS200, CS220, CS302, CS310, CS301]
-   * 
-   * --------To take CS310, you need to take: --------MATH222
-   * 
-   * ----To take CS310, you need to take: ----MATH222
-   * 
-   * Note: you only need to take one course from each row!
+   * The main method drives the application. It's functionality is described in the class header.
    * 
    * @param args input arguments if any
    */
@@ -178,13 +172,22 @@ public class CommandLineDriver {
             if (course.hasPrereqs()) {
               Object[] prereqs = course.getCoursePrereqs().toArray();
               System.out.print("\nThe direct prerequisites of " + courseName + " are: \n");
-              for (int i = 0; i < prereqs.length; i++)
-                System.out.println(prereqs[i].toString() + " ");
-              System.out.println();
-              System.out.println("Note: you only need to take one course from each row!");
+              // read through the prerequisites to format the output
+              for (int i = 0; i < prereqs.length; i++) {
+                if (prereqs[i] instanceof List<?>) {
+                  List<String> arrayList = (List<String>) prereqs[i];
+                  // the first term of any or relationship would not have an "or" before it
+                  System.out.println(arrayList.get(0));
+                  // while the later term have the "or" added
+                  for (int j = 1; j < arrayList.size(); j++)
+                    System.out.println("or " + arrayList.get(j));
+                  System.out.println();
+                } else // if there is only one prerequisites, just print it
+                  System.out.println(prereqs[i]);
+              }
             } else // otherwise tells the user that there is no prerequisite
               System.out.print("\nThere is no prerequisite for " + courseName + ".\n");
-            printNoRereqs(courseName);
+            printNoRereqs(courseName);  // print any note on restrictions
           } else // otherwise tells the user that the input was invalid
             System.out.println("\nSorry, " + courseName + " is not offered at UW-Madison.");
         }
@@ -198,8 +201,6 @@ public class CommandLineDriver {
               System.out.print("\nThe prerequisites of " + courseName + " are: \n");
               // calling the recursive method to build the output tree
               printTree(course, 0);
-              System.out.println();
-              System.out.println("Note: you only need to take one course from each row!");
             } else // otherwise tells the user that there is no prerequisite
               System.out.print("\nThere is no prerequisite for " + courseName + ".\n");
           } else // otherwise tells the user that the input was invalid
