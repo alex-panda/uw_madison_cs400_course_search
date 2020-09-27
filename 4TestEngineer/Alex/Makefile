@@ -12,7 +12,7 @@ run: Compile
 	java CommandLineDriver
 
 Compile:
-	javac ./*.java
+	javac $(ShowErrors) ./*.java
 
 test: Compile
 	java TestData

@@ -6,9 +6,6 @@
 // Lecturer: Florian Heimerl
 // Notes to Grader: <optional extra notes>
 
-import java.lang.System.out.println;
-import java.lang.System.out.print;
-
 /**
  * A TestSuite to test the DataWranglers' classes.
  * */
@@ -18,14 +15,14 @@ public class TestData {
     * The main method used to run the tests.
     */
     public static void main(String[] args) {
-        print("\nTest1: " + "\n");
-        print("    " + test1() + "\n\n");
+        System.out.print("\nTest1: " + "\n");
+        System.out.print("    " + test1() + "\n\n");
 
-        print("Test2: " + "\n");
-        print("   " + test2() + "\n\n");
+        System.out.print("Test2: " + "\n");
+        System.out.print("   " + test2() + "\n\n");
 
-        print("Test3: " + "\n");
-        print("   " + test3() + "\n\n");
+        System.out.print("Test3: " + "\n");
+        System.out.print("   " + test3() + "\n\n");
     }
 
    /**
