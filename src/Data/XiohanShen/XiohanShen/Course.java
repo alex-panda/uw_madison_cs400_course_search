@@ -1,3 +1,4 @@
+package XiohanShen;
 // --== CS400 File Header Information ==--
 // Name: Xiaohan Shen
 // Email: xshen97@wisc.edu
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Course {
     private String name;
-    // “(CS 200|CS300)&(CS400)” = [CS400,[CS300,CS200]]
+    // “(CS 200|CS300)&(CS400)�? = [CS400,[CS300,CS200]]
     private ArrayList<Object> prereqs;
 
     private ArrayList<String> noreqs;

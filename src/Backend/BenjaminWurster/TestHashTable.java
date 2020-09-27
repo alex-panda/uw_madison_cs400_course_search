@@ -1,4 +1,5 @@
-package BackendDeveloper;// --== CS400 File Header Information ==--
+package BenjaminWurster;
+// --== CS400 File Header Information ==--
 // Name: Benjamin Ryan Wurster
 // Email: bwurster@wisc.edu
 // Team: DC
@@ -10,7 +11,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Test class for HashTableMap
- * 
+ *
  * @author Ben
  *
  */
@@ -21,7 +22,7 @@ public class TestHashTable {
 	 * correctness of size and ensuring that the size remains accurate after a
 	 * rehashing point. The existence of all elements is then checked to make sure
 	 * they are transferred correctly.
-	 * 
+	 *
 	 * @return true if passed
 	 */
 	public static boolean test1() {
@@ -36,7 +37,7 @@ public class TestHashTable {
 			passed = false;
 			System.out.println("test1() did not return correct size.");
 		}
-		
+
 		if(table.put(1, "String Key: 1")) {
 			passed = false;
 		}
@@ -56,7 +57,7 @@ public class TestHashTable {
 	/**
 	 * Test get() by getting a valid value and checking its accuracy and by trying
 	 * to get an invalid value and seeing that an exception is thrown.
-	 * 
+	 *
 	 * @return true if passed
 	 */
 	public static boolean test2() {
@@ -88,7 +89,7 @@ public class TestHashTable {
 	/**
 	 * Test containsKey() by adding to the table and checking the accuracy of
 	 * existent and non-existent values.
-	 * 
+	 *
 	 * @return true if passed
 	 */
 	public static boolean test3() {
@@ -115,7 +116,7 @@ public class TestHashTable {
 	 * Tests remove() by checking that an element can be correctly removed, checking
 	 * that a removed element cannot be removed again, and checking the accuracy of
 	 * attempted removal from an empty table.
-	 * 
+	 *
 	 * @return true if passed
 	 */
 	public static boolean test4() {
@@ -169,7 +170,7 @@ public class TestHashTable {
 	 * Test clear() and different generic type functionality by adding String,
 	 * Double pairs, checking size, running clear() ad checking that elements are
 	 * clear.
-	 * 
+	 *
 	 * @return true if passed
 	 */
 	public static boolean test5() {
@@ -200,7 +201,7 @@ public class TestHashTable {
 
 	/**
 	 * Main method to run tests.
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {

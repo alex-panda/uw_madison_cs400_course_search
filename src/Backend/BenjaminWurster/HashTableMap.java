@@ -1,4 +1,5 @@
-package BackendDeveloper;// --== CS400 File Header Information ==--
+package BenjaminWurster;
+// --== CS400 File Header Information ==--
 // Name: Benjamin Ryan Wurster
 // Email: bwurster@wisc.edu
 // Team: DC
@@ -6,18 +7,19 @@ package BackendDeveloper;// --== CS400 File Header Information ==--
 // Lecturer: Gary Dahl
 // Notes to Grader: None
 
+import Interfaces.HashMapADTInterface;
 import java.util.NoSuchElementException;
 import java.util.LinkedList;
 
 /**
  * HashTableMap, MapADT interface implementation for key-value pairs
- * 
+ *
  * @author Ben
  *
  * @param <KeyType>
  * @param <ValueType>
  */
-public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueType> {
+public class HashTableMap<KeyType, ValueType> implements HashMapADTInterface<KeyType, ValueType> {
 
 	private int capacity;
 	private LinkedList<PairNode<KeyType, ValueType>>[] hashTable;
@@ -25,7 +27,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 
 	/**
 	 * Constructor for hash table. Initializes fields.
-	 * 
+	 *
 	 * @param capacity The initial capacity of the table
 	 */
 	@SuppressWarnings("unchecked")
@@ -44,7 +46,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 
 	/**
 	 * Private hash function to reduce redundancy of code.
-	 * 
+	 *
 	 * @param key the key to hash
 	 * @return array index in hash table
 	 */
@@ -74,7 +76,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 	/**
 	 * Put method to insert key-value pairs into the table. Rehash if size reaches
 	 * 80% of capacity.
-	 * 
+	 *
 	 * @return true if successfully inserted
 	 */
 	@Override
@@ -95,7 +97,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 
 	/**
 	 * Get key from hash table if it exists
-	 * 
+	 *
 	 * @return ValueType if key-value pair in table
 	 * @throws NoSuchElementException if there is no element
 	 */
@@ -124,7 +126,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 
 	/**
 	 * checks to see of hash table contains key
-	 * 
+	 *
 	 * @returns true if hash table has key
 	 */
 	@Override
@@ -139,7 +141,7 @@ public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueTy
 
 	/**
 	 * Remove an element from the hash table and return its value
-	 * 
+	 *
 	 * @return ValueType associated with removed element
 	 */
 	@Override

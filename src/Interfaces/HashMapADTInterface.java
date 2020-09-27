@@ -1,8 +1,11 @@
-package BackendDeveloper;
+package Interfaces;
 
 import java.util.NoSuchElementException;
 
-public interface MapADT<KeyType,ValueType> {
+/**
+ * A public interface to implement to make a HashMap
+ * */
+public interface HashMapADTInterface<KeyType,ValueType> {
     public boolean put(KeyType key, ValueType value);
     public ValueType get(KeyType key) throws NoSuchElementException;
     public int size();

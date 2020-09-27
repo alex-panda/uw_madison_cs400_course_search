@@ -1,4 +1,5 @@
-package BackendDeveloper2;// --== CS400 File Header Information ==--
+package BackendDeveloper2;
+// --== CS400 File Header Information ==--
 // Name: Xiaohan Shen
 // Email: xshen97@wisc.edu
 // Team: DC
@@ -59,7 +60,7 @@ public class Course {
      *
      * @return true if the course has prerequisites, false otherwise.
      */
-    public Boolean hasPrereqs() {
+    public boolean hasPrereqs() {
         //return (prereqs == null);
        return prereqs.size() != 0;
     }
@@ -69,7 +70,7 @@ public class Course {
      *
      * @return true if the course has courses that cannot be taken prior to this course, false otherwise.
      */
-    public Boolean hasNoreqs() {
+    public boolean hasNoreqs() {
         //return (noreqs == null);
        return noreqs.size() != 0;
     }

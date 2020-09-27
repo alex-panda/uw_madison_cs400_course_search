@@ -1,3 +1,4 @@
+package AllistarMascarenhas;
 // --== CS400 File Header Information ==--
 // Name: Allistair Mascarenhas
 // Email: anmascarenha@wisc.edu
@@ -23,7 +24,7 @@ public class DataLoader {
   /**
    * Constructor with an argument that initialize data and csvPath by calling the appropriate
    * methods
-   * 
+   *
    * @param csvPath - name of the csv file
    */
   public DataLoader(String csvPath) {
@@ -42,7 +43,7 @@ public class DataLoader {
 
   /**
    * Accessor method that returns data
-   * 
+   *
    * @return data
    */
   public ArrayList<Course> getData() {
@@ -52,7 +53,7 @@ public class DataLoader {
   /**
    * Helper method that reads through each line of the file. Makes use of try catch to handle any
    * exceptions that arise
-   * 
+   *
    * @return ArrayList<String[]> - raw data which hasn't yet been cleaned up
    */
   private ArrayList<String[]> readFile() {

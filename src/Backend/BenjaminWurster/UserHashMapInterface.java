@@ -1,4 +1,4 @@
-package BackendDeveloper;
+package BenjaminWurster;
 // --== CS400 File Header Information ==--
 // Name: Benjamin Ryan Wurster
 // Email: bwurster@wisc.edu
@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 /**
  * The Backend Developer 1 UserHashMapInterface to link frontend to individual
  * hash maps
- * 
+ *
  * @author Ben
  *
  */
@@ -33,7 +33,7 @@ public class UserHashMapInterface {
 	/**
 	 * Adds a course to the hash table. Returns false if does not add because
 	 * element is already present.
-	 * 
+	 *
 	 * @param course The course to be added
 	 * @return true if element is added successfully
 	 */
@@ -43,7 +43,7 @@ public class UserHashMapInterface {
 
 	/**
 	 * Removes a course from the table
-	 * 
+	 *
 	 * @param courseName The name of the course to remove
 	 * @return true of successfully removed
 	 */
@@ -57,7 +57,7 @@ public class UserHashMapInterface {
 
 	/**
 	 * A method to access the size of the table
-	 * 
+	 *
 	 * @return number of courses in table
 	 */
 	public int courseCount() {
@@ -66,7 +66,7 @@ public class UserHashMapInterface {
 
 	/**
 	 * Gets a course object from the table
-	 * 
+	 *
 	 * @param courseName The name of the course to get
 	 * @return course object with matching name
 	 */

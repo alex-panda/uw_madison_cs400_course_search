@@ -1,3 +1,4 @@
+package AllistarMascarenhas;
 // --== CS400 File Header Information ==--
 // Name: Allistair Mascarenhas
 // Email: anmascarenha@wisc.edu
@@ -20,7 +21,7 @@ public class Course {
 
   /**
    * Constructor that initializes all the private variables of the class
-   * 
+   *
    * @param name    - name of the course
    * @param prereqs - prerequisites of the course
    * @param noreqs  - courses that can't be taken before taking this course
@@ -33,7 +34,7 @@ public class Course {
 
   /**
    * Checks if the course has prerequisites
-   * 
+   *
    * @return true if the course has prerequisites, and false otherwise
    */
   public boolean hasPrereqs() {
@@ -46,7 +47,7 @@ public class Course {
 
   /**
    * Checks if the course has other courses that cannot be taken prior to this course
-   * 
+   *
    * @return true if the course does have courses that cannot be taken prior to this course, and
    *         false otherwise
    */
@@ -60,7 +61,7 @@ public class Course {
 
   /**
    * Accessor method that returns the course name
-   * 
+   *
    * @return String - course name
    */
   public String getName() {
@@ -69,7 +70,7 @@ public class Course {
 
   /**
    * Accessor method that returns the prerequisites of the course
-   * 
+   *
    * @return ArrayList<Object> - ArrayList of course prerequisites
    */
   public ArrayList<Object> getCoursePrereqs() {
@@ -78,7 +79,7 @@ public class Course {
 
   /**
    * Accessor method that returns courses which cannot be taken before this course
-   * 
+   *
    * @return ArrayList<String> - ArrayList of courses which cannot be taken before this course
    */
   public ArrayList<String> getCourseNoreqs() {

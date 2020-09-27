@@ -1,3 +1,4 @@
+package JustinQiao;
 // --== CS400 File Header Information ==--
 // Name: Justin Qiao
 // Email: sqiao6@wisc.edu
@@ -45,7 +46,7 @@ public class CommandLineDriver {
 
   /**
    * Helper method to print the indentation in the formatted tree output.
-   * 
+   *
    * @param indent - the number of how many indentation need (1 means "----")
    */
   private static void printIndent(int indent) {
@@ -55,7 +56,7 @@ public class CommandLineDriver {
 
   /**
    * Helper method to print the courses user cannot take if they take the given course if any.
-   * 
+   *
    * @param course - the given course under check
    */
   private static void printNoRereqs(String courseName) {
@@ -72,7 +73,7 @@ public class CommandLineDriver {
    * in a tree structure. It implement this by recursively calling itself. This method will find
    * prerequisites of a prerequisite that is under the CS department ONLY. For instance, if a course
    * require CS 400 and Math 234, only the deeper prerequisites of CS 400 will be searched.
-   * 
+   *
    * @param course - the current course we are trying to query its prerequisites
    * @param indent - the number of how many indentation need (1 means "----")
    */
@@ -106,31 +107,31 @@ public class CommandLineDriver {
 
   /**
    * The main method drives the application.
-   * 
+   *
    * Example Course Input: CS514
-   * 
+   *
    * Example Outputs:
-   * 
+   *
    * ----Function[A]: CS514 is offered at UW-Madison!
-   * 
+   *
    * ----Function[B]: The direct prerequisites of CS514 are: [MATH320, MATH340, MATH341, MATH375]
    * [MATH322, MATH376, MATH421, MATH521] [CS200, CS220, CS300, CS310, CS301]
    *
    * Note: you only need to take one course from each row!
-   * 
+   *
    * ----Function[C]:
-   * 
+   *
    * The prerequisites of CS514 are: [MATH320, MATH340, MATH341, MATH375] [MATH322, MATH376,
    * MATH421, MATH521] [CS200, CS220, CS300, CS310, CS301]
-   * 
+   *
    * ----To take CS300, you need to take: ----[CS200, CS220, CS302, CS310, CS301]
-   * 
+   *
    * --------To take CS310, you need to take: --------MATH222
-   * 
+   *
    * ----To take CS310, you need to take: ----MATH222
-   * 
+   *
    * Note: you only need to take one course from each row!
-   * 
+   *
    * @param args input arguments if any
    */
   public static void main(String[] args) {

@@ -1,4 +1,5 @@
-package BackendDeveloper;// --== CS400 File Header Information ==--
+package BenjaminWurster;
+// --== CS400 File Header Information ==--
 // Name: Benjamin Ryan Wurster
 // Email: bwurster@wisc.edu
 // Team: DC
@@ -9,7 +10,7 @@ package BackendDeveloper;// --== CS400 File Header Information ==--
 /**
  * Object that pairs the KeyType generic and the ValueType generic into one
  * object.
- * 
+ *
  * @author Ben
  *
  * @param <KeyType>   generic type for key
