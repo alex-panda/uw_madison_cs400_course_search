@@ -18,7 +18,7 @@ import java.util.Arrays;
  * courses from target csv file.
  */
 public class DataLoader{
-    private ArrayList<Course> data;
+    private ArrayList<Course> courses;
     private String csvPath;
 
     /**
@@ -46,19 +46,19 @@ public class DataLoader{
     public ArrayList<Course> getData() {
         ArrayList<String[]> courseList = readData();
         //ArrayList<Course> courses = new ArrayList<>();
-        data = new ArrayList<>();
+        this.courses = new ArrayList<>();
         for (String[] courseInfo: courseList) {
             String courseName = courseInfo[0];
-            ArrayList<Object> prereqs = (courseInfo[1] == "None") ? null : parsePrereqs(courseInfo[1]);
-            //ArrayList<String> noreqs = (courseInfo[2] == "None") ? null :
-            //         Arrays.asList(courseInfo[2].split("&"));
-            //courses.add(new Course(courseName, prereqs, noreqs));
-            ArrayList<String> noreqs = new ArrayList<String>();
-            noreqs.addAll((courseInfo[2] == "None") ? null : Arrays.asList(courseInfo[2].split("&")));
-            data.add(new Course(courseName, prereqs, noreqs));
+            ArrayList<Object> prereqs = (courseInfo[1].equals("None")) ? null : parsePrereqs(courseInfo[1]);
+            ArrayList<String> noreqs = new ArrayList<>();
+            if ((courseInfo[2].equals("None"))) {
+                noreqs = null;
+            } else {
+                noreqs.addAll(Arrays.asList(courseInfo[2].split("&")));
+            }
+            this.courses.add(new Course(courseName, prereqs, noreqs));
         }
-        //return courses;
-        return data;
+        return this.courses;
     }
 
     /**
@@ -93,6 +93,7 @@ public class DataLoader{
             BufferedReader br = new BufferedReader(new FileReader(csvPath));
             String line = "";
             ArrayList<String[]> courseList = new ArrayList<>();
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 // use comma as separator
                 String[] courseInfo = line.split(",");
