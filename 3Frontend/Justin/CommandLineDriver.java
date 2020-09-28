@@ -46,7 +46,7 @@ public class CommandLineDriver {
 
   /**
    * Helper method to print the indentation in the formatted tree output.
-   * 
+   *
    * @param indent - the number of how many indentation need (1 means "----")
    */
   private static void printIndent(int indent) {
@@ -56,7 +56,7 @@ public class CommandLineDriver {
 
   /**
    * Helper method to print the courses user cannot take if they take the given course if any.
-   * 
+   *
    * @param course - the given course under check
    */
   private static void printNoRereqs(String courseName) {
@@ -74,7 +74,7 @@ public class CommandLineDriver {
    * in a tree structure. It implement this by recursively calling itself. This method will find
    * prerequisites of a prerequisite that is under the CS department ONLY. For instance, if a course
    * require CS 400 and Math 234, only the deeper prerequisites of CS 400 will be searched.
-   * 
+   *
    * @param course - the current course we are trying to query its prerequisites
    * @param indent - the number of how many indentation need (1 means "----")
    */
@@ -124,7 +124,7 @@ public class CommandLineDriver {
 
   /**
    * The main method drives the application. It's functionality is described in the class header.
-   * 
+   *
    * @param args input arguments if any
    */
   public static void main(String[] args) {

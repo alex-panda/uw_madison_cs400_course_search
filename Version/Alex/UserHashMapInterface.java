@@ -19,75 +19,75 @@ import java.util.NoSuchElementException;
  */
 public class UserHashMapInterface {
 
-	private HashTableMap<String, Course> table;
+    private HashTableMap<String, Course> table;
 
-	/**
-	 * Constructor to create table instance and call an initialization method
-	 */
-	public UserHashMapInterface() {
-		this.table = new HashTableMap<>();
+    /**
+     * Constructor to create table instance and call an initialization method
+     */
+    public UserHashMapInterface() {
+        this.table = new HashTableMap<>();
 
-		initialize();
-	}
+        initialize();
+    }
 
-	/**
-	 * Adds a course to the hash table. Returns false if does not add because
-	 * element is already present.
-	 * 
-	 * @param course The course to be added
-	 * @return true if element is added successfully
-	 */
-	public boolean addCourse(Course course) {
-		return this.table.put(course.getName(), course);
-	}
+    /**
+     * Adds a course to the hash table. Returns false if does not add because
+     * element is already present.
+     * 
+     * @param course The course to be added
+     * @return true if element is added successfully
+     */
+    public boolean addCourse(Course course) {
+        return this.table.put(course.getName(), course);
+    }
 
-	/**
-	 * Removes a course from the table
-	 * 
-	 * @param courseName The name of the course to remove
-	 * @return true of successfully removed
-	 */
-	public boolean removeCourse(String courseName) {
-		Course pulledCourse = table.remove(courseName);
-		if (pulledCourse == null) {
-			return false;
-		}
-		return true;
-	}
+    /**
+     * Removes a course from the table
+     * 
+     * @param courseName The name of the course to remove
+     * @return true of successfully removed
+     */
+    public boolean removeCourse(String courseName) {
+        Course pulledCourse = table.remove(courseName);
+        if (pulledCourse == null) {
+            return false;
+        }
+        return true;
+    }
 
-	/**
-	 * A method to access the size of the table
-	 * 
-	 * @return number of courses in table
-	 */
-	public int courseCount() {
-		return table.size();
-	}
+    /**
+     * A method to access the size of the table
+     * 
+     * @return number of courses in table
+     */
+    public int courseCount() {
+        return table.size();
+    }
 
-	/**
-	 * Gets a course object from the table
-	 * 
-	 * @param courseName The name of the course to get
-	 * @return course object with matching name
-	 */
-	public Course getCourse(String courseName) {
-		try {
-			return table.get(courseName);
-		} catch (NoSuchElementException e) {
-			return null;
-		}
+    /**
+     * Gets a course object from the table
+     * 
+     * @param courseName The name of the course to get
+     * @return course object with matching name
+     */
+    public Course getCourse(String courseName) {
+        try {
+            return table.get(courseName);
+        } catch (NoSuchElementException e) {
+            return null;
+        }
 
-	}
+    }
 
-	/**
-	 * private helper method to fill the hash table with existing data
-	 */
-	private void initialize() { // calls Data wrangler initialization
-		TempDataLoader dataLoader = new DataLoader(); // TODO remove Temp when integrated
-		ArrayList<Course> courseList = dataLoader.getData();
-		for (Course course : courseList) {
-			addCourse(course);
-		}
-	}
+    /**
+     * private helper method to fill the hash table with existing data
+     */
+    private void initialize() { // calls Data wrangler initialization
+        DataLoader dataLoader = new DataLoader(); // TODO remove Temp when integrated
+        ArrayList<Course> courseList = dataLoader.getData();
+        for (Course course : courseList) {
+            addCourse(course);
+        }
+    }
 
 }

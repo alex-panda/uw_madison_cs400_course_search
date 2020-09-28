@@ -1,170 +1,188 @@
 // --== CS400 File Header Information ==--
-// Name: Benjamin Ryan Wurster
-// Email: bwurster@wisc.edu
+// Name: Justin Qiao
+// Email: sqiao6@wisc.edu
 // Team: DC
-// TA: Yelun
-// Lecturer: Gary Dahl
-// Notes to Grader: None
+// TA: Yelun Bao
+// Lecturer: Florian Heimerl
+// Notes to Grader: There are 4 source files in this project: MapADT.java, KeyValuePair.java,
+// HashTableMap.java, TestHashTable.java.
 
-import java.util.NoSuchElementException;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
- * HashTableMap, MapADT interface implementation for key-value pairs
- * 
- * @author Ben
+ * This class implements a Hash Table structure which supports storing key-value pairs in hash table
+ * maps, adding into, getting, removing and lookup pairs from the table. Instance of this class can
+ * process rehashing automatically when the load factor is greater than or equals to 80%.
  *
- * @param <KeyType>
- * @param <ValueType>
+ * @author Justin Qiao
  */
 public class HashTableMap<KeyType, ValueType> implements MapADT<KeyType, ValueType> {
+  private int capacity; // the current capacity of the hashTable
+  private LinkedList<KeyValuePair<KeyType, ValueType>>[] hashTable; // the hushTable instance
+  private int size; // the number of key-value pairs inside the hashTable
 
-	private int capacity;
-	private LinkedList<PairNode<KeyType, ValueType>>[] hashTable;
-	private int size;
+  /**
+   * Creates an empty HashTableMap by a given capacity. Initializes private fields.
+   * 
+   * @param capacity - a int value of the capacity of the hashTable
+   */
+  public HashTableMap(int capacity) {
+    this.capacity = capacity;
+    hashTable = new LinkedList[capacity];
+    size = 0;
+    for (int i = 0; i < capacity; i++)
+      hashTable[i] = new LinkedList<KeyValuePair<KeyType, ValueType>>();
+  }
 
-	/**
-	 * Constructor for hash table. Initializes fields.
-	 * 
-	 * @param capacity The initial capacity of the table
-	 */
-	@SuppressWarnings("unchecked")
-	public HashTableMap(int capacity) {
-		this.capacity = capacity;
-		hashTable = new LinkedList[this.capacity];
-		this.size = 0;
-	}
+  /**
+   * Creates an empty HashTableMap with default capacity(10).
+   * 
+   */
+  public HashTableMap() {
+    this(10);
+  }
 
-	/**
-	 * Default constructor
-	 */
-	public HashTableMap() { // with default capacity = 10
-		this(10);
-	}
+  /**
+   * Add a new key-value pair into the hashTable. Nothing will be changed if the key already exists
+   * in the hashTable. Doubling the hashTable and rehashing the data when loadFactor is greater than
+   * or equals to 80%.
+   * 
+   * @param KeyType   input key
+   * @param ValueType value value that is matched to the key
+   * @see MapADT#put
+   * @return true if successfully added the new data pair, and false otherwise
+   */
+  @Override
+  public boolean put(KeyType key, ValueType value) {
+    // check whether the key already exists in the hashTable
+    KeyValuePair<KeyType, ValueType> data = new KeyValuePair<KeyType, ValueType>(key, value);
+    int hashIndex = Math.abs(key.hashCode()) % capacity;
+    if (hashTable[hashIndex].size() != 0)
+      for (int i = 0; i < hashTable[hashIndex].size(); i++)
+        if (data.getKey().equals(hashTable[hashIndex].get(i).getKey()))
+          return false;
+    // check whether rehashing is needed to add the new data pair
+    double loadFactor = (double) (size + 1) / capacity;
+    if (loadFactor >= 0.8)
+      rehashing();
+    // add the new data pair if the key is valid
+    hashTable[hashIndex].add(data);
+    size++;
+    return true;
+  }
 
-	/**
-	 * Private hash function to reduce redundancy of code.
-	 * 
-	 * @param key the key to hash
-	 * @return array index in hash table
-	 */
-	private int hash(KeyType key) {
-		return Math.abs(key.hashCode() % this.capacity);
-	}
+  /**
+   * Lookup a key-value pair in the hashTable by the given key. Throw exception if no data found.
+   * 
+   * @param KeyType input key
+   * @return the ValueType value corresponding to the key if matched
+   * @see MapADT#get
+   * @throws NoSuchElementException if no data found
+   */
+  @Override
+  public ValueType get(KeyType key) throws NoSuchElementException {
+    // return the value matched to the key if it exists in the hashTable
+    int hashIndex = Math.abs(key.hashCode()) % capacity;
+    if (hashTable[hashIndex].size() != 0)
+      for (int i = 0; i < hashTable[hashIndex].size(); i++)
+        if (hashTable[hashIndex].get(i).getKey().equals(key))
+          return hashTable[hashIndex].get(i).getValue();
+    // throw exception if the key does not exist in the hashTable
+    throw new NoSuchElementException();
+  }
 
-	/**
-	 * Private helper method to rehash the table
-	 */
-	@SuppressWarnings("unchecked")
-	private void rehashTable() {
-		LinkedList<PairNode<KeyType, ValueType>>[] oldHashTable = hashTable;
-		this.capacity *= 2;
-		this.hashTable = new LinkedList[this.capacity];
-		for (LinkedList<PairNode<KeyType, ValueType>> list : oldHashTable) {
-			if (list != null) {
-				for (PairNode<KeyType, ValueType> pair : list) {
-					this.put(pair.getKey(), pair.getValue());
-					this.size--;
-				}
-			}
+  /**
+   * Return the number of elements inside the current hashTable.
+   * 
+   * @return the number of element inside the current hashTable
+   * @see MapADT#size
+   */
+  @Override
+  public int size() {
+    return size;
+  }
 
-		}
-	}
+  /**
+   * Checks whether the given key exists in the current hashTable.
+   * 
+   * @return true if key exists, false otherwise
+   * @see MapADT#containsKey
+   */
+  @Override
+  public boolean containsKey(KeyType key) {
+    try {
+      get(key);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
 
-	/**
-	 * Put method to insert key-value pairs into the table. Rehash if size reaches
-	 * 80% of capacity.
-	 * 
-	 * @return true if successfully inserted
-	 */
-	@Override
-	public boolean put(KeyType key, ValueType value) {
-		if (!this.containsKey(key)) {
-			if (hashTable[hash(key)] == null) {
-				hashTable[hash(key)] = new LinkedList<>();
-			}
-			hashTable[hash(key)].add(new PairNode<>(key, value));
-			this.size++;
-			if ((double) this.size / this.capacity >= 0.8) {
-				rehashTable();
-			}
-			return true;
-		}
-		return false;
-	}
+  /**
+   * Remove and return a key-value pair in the hashTable by the given key. Return null and change
+   * nothing if no key matched.
+   * 
+   * @param KeyType input key
+   * @return the ValueType value corresponding to the key if removed, null if no key matched
+   * @see MapADT#remove
+   */
+  @Override
+  public ValueType remove(KeyType key) {
+    // remove and return the value matched to the given key, if there is any
+    if (containsKey(key)) {
+      int hashIndex = Math.abs(key.hashCode()) % capacity;
+      for (int i = 0; i < hashTable[hashIndex].size(); i++)
+        if (hashTable[hashIndex].get(i).getKey().equals(key)) {
+          size--;
+          return hashTable[hashIndex].remove(i).getValue();
+        }
+    }
+    // return null otherwise
+    return null;
+  }
 
-	/**
-	 * Get key from hash table if it exists
-	 * 
-	 * @return ValueType if key-value pair in table
-	 * @throws NoSuchElementException if there is no element
-	 */
-	@Override
-	public ValueType get(KeyType key) throws NoSuchElementException {
-		LinkedList<PairNode<KeyType, ValueType>> list = this.hashTable[hash(key)];
-		if (list == null) {
-			throw new NoSuchElementException();
-		} else {
-			for (PairNode<KeyType, ValueType> pair : list) {
-				if (pair.getKey().equals(key)) {
-					return pair.getValue();
-				}
-			}
-			throw new NoSuchElementException();
-		}
-	}
+  /**
+   * Remove all data-value pairs in the hashTable.
+   * 
+   * @see MapADT#clear
+   */
+  @Override
+  public void clear() {
+    for (int i = 0; i < capacity; i++)
+      if (hashTable[i].size() != 0)
+        hashTable[i].clear();
+    size = 0;
+  }
 
-	/**
-	 * @return size of elements in hash table
-	 */
-	@Override
-	public int size() {
-		return this.size;
-	}
+  /**
+   * Doubles the table size and rehash the data already in the table.
+   * 
+   */
+  private void rehashing() {
+    // create and initialize the new table of doubled capacity
+    LinkedList<KeyValuePair<KeyType, ValueType>>[] newTable = new LinkedList[capacity * 2];
+    for (int i = 0; i < capacity * 2; i++)
+      newTable[i] = new LinkedList<KeyValuePair<KeyType, ValueType>>();
+    // rehashing
+    for (int i = 0; i < capacity; i++)
+      for (int j = 0; j < hashTable[i].size(); j++) {
+        KeyValuePair<KeyType, ValueType> data = hashTable[i].get(j);
+        int newIndex = Math.abs(data.getKey().hashCode()) % (2 * capacity);
+        newTable[newIndex].add(data);
+      }
+    // use the new table to replace the original one
+    capacity *= 2;
+    hashTable = newTable;
+  }
 
-	/**
-	 * checks to see of hash table contains key
-	 * 
-	 * @returns true if hash table has key
-	 */
-	@Override
-	public boolean containsKey(KeyType key) {
-		try {
-			this.get(key);
-		} catch (NoSuchElementException e) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Remove an element from the hash table and return its value
-	 * 
-	 * @return ValueType associated with removed element
-	 */
-	@Override
-	public ValueType remove(KeyType key) {
-		if (this.containsKey(key)) {
-			LinkedList<PairNode<KeyType, ValueType>> list = hashTable[hash(key)];
-			for (PairNode<KeyType, ValueType> pair : list) {
-				if (pair.getKey().equals(key)) {
-					list.remove(pair);
-					size--;
-					return pair.getValue();
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Clear the hash table
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void clear() {
-		this.hashTable = new LinkedList[this.capacity];
-		this.size = 0;
-	}
+  /**
+   * This method is just for testing purpose to check whether the table have correct capacity.
+   * 
+   * @return the capacity of the current hashTable
+   */
+  protected int getCapacity() {
+    return capacity;
+  }
 
 }

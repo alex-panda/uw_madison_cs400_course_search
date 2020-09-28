@@ -12,11 +12,15 @@ run: Compile
 	java CommandLineDriver
 
 Compile:
-	javac $(ShowErrors) ./*.java
+	javac ./*.java
 
-test: Compile
+testData: Compile
 	java TestData
+
+testBackend: Compile
 	java TestBackEnd
+
+testFrontend: Compile
 	java TestFrontEnd
 
 clean:
