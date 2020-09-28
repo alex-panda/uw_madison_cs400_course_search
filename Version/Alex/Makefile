@@ -14,6 +14,11 @@ run: Compile
 Compile:
 	javac ./*.java
 
+testAll: Compile
+	java TestData
+	java TestBackEnd
+	java TestFrontEnd
+
 testData: Compile
 	java TestData
 

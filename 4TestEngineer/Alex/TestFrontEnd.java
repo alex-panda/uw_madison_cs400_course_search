@@ -153,8 +153,10 @@ public class TestFrontEnd {
         if (recordedClasses.size() != 0) {
             System.out.println("Classes that failed: ");
             System.out.println("" + recordedClasses);
+            System.out.println("");
             return false;
         }
+        System.out.println("");
         return true;
     }
 
@@ -174,7 +176,7 @@ public class TestFrontEnd {
             ArrayList<String[]> courseList = new ArrayList<>();
             csvReader.readLine();
             while ((line = csvReader.readLine()) != null) {
-                // use comma as separator
+                // use comma as a separator
                 String[] courseInfo = line.split(",");
                 courseList.add(courseInfo);
             }
