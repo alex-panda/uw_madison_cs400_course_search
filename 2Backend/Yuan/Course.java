@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class Course {
     private String name;
-    // ¡°(CS 200|CS300)&(CS400)¡± = [CS400,[CS300,CS200]]
     private ArrayList<Object> prereqs;
 
     private ArrayList<String> noreqs;
@@ -60,8 +59,7 @@ public class Course {
      * @return true if the course has prerequisites, false otherwise.
      */
     public Boolean hasPrereqs() {
-        //return (prereqs == null);
-       return prereqs.size() != 0;
+        return (prereqs != null);
     }
 
     /**
@@ -70,8 +68,7 @@ public class Course {
      * @return true if the course has courses that cannot be taken prior to this course, false otherwise.
      */
     public Boolean hasNoreqs() {
-        //return (noreqs == null);
-       return noreqs.size() != 0;
+        return (noreqs != null);
     }
 
     /**
