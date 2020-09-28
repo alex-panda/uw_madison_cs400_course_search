@@ -35,14 +35,8 @@ public class TestBackEnd {
         } else {
             System.out.println("yes\n");
         }
-        System.out.print("Test4 (Does remove method of hashmap work correctly?): ");
+        System.out.print("Test4 (Do put, clear, and containsKey methods of hashmap work?): ");
         if (!test4()) {
-            System.out.println("NO: FAILED\n");
-        } else {
-            System.out.println("yes\n");
-        }
-        System.out.print("Test5 (Do put, clear, and containsKey methods of hashmap work?): ");
-        if (!test5()) {
             System.out.println("NO: FAILED\n");
         } else {
             System.out.println("yes\n");
@@ -116,7 +110,7 @@ public class TestBackEnd {
         for (int i = 0; i < 1000; i++) {
             try {
                 String value = hashMap.get("Map" + i);
-                if (value != ("i: " + i)) {
+                if (value == null || !value.equals("i: " + i)) {
                     System.out.print("Failed: The hashmap did not return the correct value for " +
                             "" + "Map" + i +". Returned value: " + value + "\n");
                     return false;
@@ -149,39 +143,9 @@ public class TestBackEnd {
     }
 
    /**
-    * Tests the put and remove methods of hashmap.
-    */
-    public static boolean test4() {
-        HashTableMap<String,String> hashMap = new HashTableMap<String,String>();
-        // Add the values to the hashMap
-        for (int i = 0; i < 1000; i++) {
-            hashMap.put("Map" + i, "i: " + i);
-        }
-
-        // make sure that the remove method removes and returns the correct value
-        //      for each key
-        for (int i = 0; i < 980; i++) {
-            String value = hashMap.remove("Map" + i);
-            if (value != ("i: " + i)) {
-                System.out.print("Failed: The hashmap did not return the correct value for " +
-                        "" + "Map" + i +". Returned value: " + value + "\n");
-                return false;
-            }
-        }
-
-        // Make sure that the remove function reduces the size of the hashmap correctly
-        if (hashMap.size() != 20) {
-            System.out.print("Failed: The hashMap size was supposed to be 20, " +
-                    "but was " + hashMap.size());
-            return false;
-        }
-        return true;
-    }
-
-   /**
     * Tests the put, clear, and containsKey methods of the hashMap
     */
-    public static boolean test5() {
+    public static boolean test4() {
         HashTableMap<String,String> hashMap = new HashTableMap<String,String>();
         // Add the values to the hashMap
         for (int i = 0; i < 1000; i++) {
