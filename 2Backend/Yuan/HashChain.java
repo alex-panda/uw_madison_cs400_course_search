@@ -32,6 +32,7 @@ public class HashChain<K,V> {
       if (this.head == null) {//if the list is empty, set the new element to head and tail
          this.head = node;
          this.tail = node;
+         this.head.setPrev(null);
       } else {
          //HashNode<K, V> temp = this.tail;
          this.tail.setNext(node);

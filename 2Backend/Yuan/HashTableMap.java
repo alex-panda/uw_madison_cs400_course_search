@@ -86,6 +86,8 @@ public class HashTableMap<K,V> implements MapADT<K, V>{
       for (HashChain<K, V> c : mapList) {
          if (!c.isEmpty()) {
             for (HashNode<K, V> temp = c.getHead(); temp != null; temp = temp.getNext()) {
+               //temp.setNext(null);
+               //temp.setPrev(null);
                index = Math.abs(temp.getKey().hashCode() % capacity);
                newMapList[index].add(temp);
             }
@@ -143,8 +145,23 @@ public class HashTableMap<K,V> implements MapADT<K, V>{
       }
       else {
          V value = mapList[index].remove(key);
-      return value;
+         size --;
+         return value;
       }//return null if linked list is empty
+   }
+   
+   /**
+    * @return the capacity of the HashMap
+    */
+   public int getCap() {
+      return this.capacity;
+   }
+   
+   /**
+    * @return the mapList
+    */
+   public HashChain<K,V>[] getList(){
+      return this.mapList;
    }
    
    /**
