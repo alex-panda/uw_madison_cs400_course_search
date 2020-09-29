@@ -36,7 +36,7 @@ public class DataLoader {
    * filepath
    */
   public DataLoader() {
-    this("DataWrangler/DataWrangler1-Xiaohan/CS_course_info.csv");
+    this("CS_course_info.csv");
   }
 
   /**
